@@ -18,8 +18,18 @@ Proporciona una capa de autenticacion al solicitar un usuario y contraseña.
 4. Asignar grupo read al usuario admin
     - **System -> Users -> [Tab]Users -> [Click en usuario admin]**
         - Group: read | (Este grupo solo le dara permisos al usuario admin para ver las configuraciones del dispositivo, no crear nuevas ni modificar las actuales.)
+5. Deshabilitar el usuario admin
+    - **System -> Users -> [Tab]Users -> [Click en usuario admin] -> [-]**
+
 
 ## Consideraciones Tecnicas
+- ⚠️ Regla de Oro del "Admin": Nunca dejes el usuario admin por defecto con la contraseña en blanco. Lo primero al configurar un router nuevo es crear tu usuario personal (ej. daniel) como full, probar que entras bien, y luego desactivar o cambiar la clave del admin original.
+- ⚠️ Riesgo del "Allowed Address": Si pones una IP fija (ej. 192.168.88.10) y mañana tu PC cambia de IP por DHCP, te vas a quedar fuera del router.
+    Tip: Es mejor poner un rango (ej. 192.168.88.0/24) o dejarlo en blanco mientras estás en etapa de pruebas.
+
+- ⚠️ Orden de Permisos: Si un usuario pertenece a un grupo que no tiene el permiso winbox o ssh, no podrá entrar aunque la contraseña sea correcta. Siempre verifica las Policies del grupo antes de asignar.
+
+- ⚠️ Active Users: Si ves un usuario conectado que no eres tú en Active Users, es señal de que el router está comprometido. Es tu panel de monitoreo en tiempo real.
 
 
 
