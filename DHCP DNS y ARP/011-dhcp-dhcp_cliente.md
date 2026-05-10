@@ -5,18 +5,19 @@ DHCP Client: Usado para que nuestro dispositivo mikrotik adquiera una dirección
 
 ## Consideraciones Tecnicas
 - DHCP trabaja dentro de un dominio de broadcast. Por cosas tecnicas, deberiamos tener un servidor DHCP por dominio de broadcast.
-- Proceso DORA:
-    - Discovery: La interface con dhcp client envia un frame broadcast al puerto 67 buscando un servidor dhcp en la network.
-    - Offer: Si hay un servidor, este escucha el paquete DHCP y se comunica al cliente diciendolo que el existe y tiene esa config ip para ofrecerle.
-    - Request: El dhcp client acepta la config ip se la asigna y envia un mensaje unicast al sv dhcp diciendole que acepta la config.
-    - ACK: Servidor DHCP le indica que reservo la direccion ip para el y le entrega por cuanto tiempo puede usarla para luego liberarla (release). 
+- Proceso DORA (Intercambio de paquetes entre un sv dhcp y un cliente dhcp para obtener configuracion ip):
+    - Discovery: La interface con dhcp client envia un frame broadcast al puerto 67 UDP buscando un servidor dhcp en la network.
+    - Offer: Si hay un servidor, este escucha el paquete DHCP y se comunica al cliente diciendolo que el existe y tiene esa config ip para ofrecerle y alquilarle.
+    - Request: El dhcp client acepta la config ip (se la asigna) y envia un mensaje unicast al sv dhcp diciendole que acepta la config.
+    - ACK: Servidor DHCP le indica que reservo la direccion ip para el y le entrega por cuanto tiempo puede usarla o se la alquila para posteriormente sea liberada (release). 
 - Puertos:
     - 67 UDP -> Servidor
     - 68 UDP -> Cliente
+- Solo se puede tener un proceso dhcp client por interface fisica o virtual de nuestro dispositivo mikrotik, ya que por estandar cada interface solo se puede ejecutar 65535 puertos virtuales, pero no puede repetirse ninguno por interface, y el proceso dhcp client usa el puerto 68 UDP, no podemos tener en la misma interface ejecutando el 68 mas de una vez.
 
 
 ## Winbox
-1. Agregar un cliente DHCP a una interface para obtener configuracion IP Automatica.
+1. Agregar un proceso cliente DHCP a una interface para obtener configuracion IP Automatica.
     - **IP -> DHCP Client -> [+]**
         - Interface: wlan1 | (Especificamos la interfaz que tomara configuracion ip automatica de un sv dhcp)
         - Use Peer DNS: ✅ | (Indicamos que utilice los servidores DNS que proporciona el sv dhcp)
@@ -36,6 +37,6 @@ DHCP Client: Usado para que nuestro dispositivo mikrotik adquiera una dirección
 
 
 ## Notas
-- Asegurarnos de configurar un dhcp client en una interface que se conecte a un dominio de broadcast que exista un servidor dhcp.
+- Asegurarnos de configurar un dhcp client en una interface que se conecte a un dominio de broadcast o red ptp que exista un servidor dhcp.
 - Asegurarnos que la red multi acceso o ptp que conecte la interface con dhcp client no tenga un equipo intermedio que bloquee los paquetes DHCP o paquetes al puerto 67 UDP que es donde escucha un servidor dhcp y es el puerto donde consume el servicio un dhcp client por defecto.
 
