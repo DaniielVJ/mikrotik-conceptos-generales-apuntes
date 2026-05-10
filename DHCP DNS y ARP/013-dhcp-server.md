@@ -28,7 +28,7 @@ Permite proporcionar direcciones ip automaticamente en una network o interface a
         - Interface: bridge 🔽 | (Seleccionamos la interface que le asignaremos la ip y habilitaremos la comunicacion de capa 3)
     
     - **IP -> DHCP Server -> [Tab]DHCP -> [DHCP Setup]** | (Esto abre un wizard con diferentes paginas para ir estableciendo la configuración del servidor DHCP).
-        1. 
+        1. a
             - DHCP Server interface: bridge | (Seleccionamos la interface donde se ejecutara el servidor dhcp)
             - [Next]
         2. 
